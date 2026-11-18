@@ -1,1 +1,1 @@
-{"firestore":{"rules":"firestore.rules"}}
+{"firestore":{"rules":"firestore.rules"},"flutter":{"platforms":{"android":{"default":{"projectId":"campus-supply-desk-om-261104","appId":"1:400010294961:android:059fb19ad62280ee281490","fileOutput":"android/app/google-services.json"}},"dart":{"../private/firebase_options.generated.dart":{"projectId":"campus-supply-desk-om-261104","configurations":{"android":"1:400010294961:android:059fb19ad62280ee281490"}}}}}}

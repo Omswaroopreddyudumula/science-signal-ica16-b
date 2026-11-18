@@ -1,0 +1,50 @@
+{
+  "stage": "restore",
+  "records": [
+    {
+      "id": "T07",
+      "timestamp": "2026-11-18T06:30:38.506653Z",
+      "precondition": "App process stopped after the initial cloud test; network online; original ID retained only by external test harness",
+      "action": "Launch a fresh app process, restore user A authentication, retrieve the exact original ID without playing",
+      "expected": "Same original server record, score 2 and original timestamp; no replay or new save",
+      "actual": "Server-only retrieval returned original score 2 and exactly matching timestamp after process restart; no questions loaded",
+      "result": "PASS",
+      "roundSuffix": "elmRDP",
+      "evidence": "T07-restart-server-retrieval.png"
+    }
+  ],
+  "serverRecord": {
+    "questionCount": 5,
+    "schemaVersion": 1,
+    "correctCount": 2,
+    "variant": "B",
+    "submittedAt": "2026-11-18T06:27:36.843Z",
+    "categoryId": 17
+  },
+  "trace": [
+    {
+      "time": "2026-11-18T06:30:37.073937Z",
+      "event": "reconcile started",
+      "phase": "verifying",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:30:38.042134Z",
+      "event": "reconcile verified",
+      "phase": "cloudVerified",
+      "roundSuffix": "elmRDP",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:30:38.042193Z",
+      "event": "reconcile settled",
+      "phase": "cloudVerified",
+      "roundSuffix": "elmRDP",
+      "acknowledged": true,
+      "inFlight": false
+    }
+  ]
+}

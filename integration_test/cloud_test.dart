@@ -113,19 +113,24 @@ void main() {
       FocusManager.instance.primaryFocus?.unfocus();
       await top();
       await tester.pump(const Duration(milliseconds: 300));
-      final boundary = tester.renderObject<RenderRepaintBoundary>(
-        find.byKey(const Key('capture-root')),
-      );
-      final image = await boundary.toImage(pixelRatio: 2);
-      final bytes = (await image.toByteData(format: ui.ImageByteFormat.png))!
-          .buffer
-          .asUint8List();
-      binding.reportData ??= <String, dynamic>{};
-      (binding.reportData!['screenshots'] ??= <dynamic>[]).add({
-        'screenshotName': name,
-        'bytes': bytes.toList(),
+      // Raster capture runs outside the widget test clock.
+      await tester.runAsync(() async {
+        final boundary = tester.renderObject<RenderRepaintBoundary>(
+          find.byKey(const Key('capture-root')),
+        );
+        final image = await boundary.toImage(pixelRatio: 2);
+        final bytes = (await image.toByteData(format: ui.ImageByteFormat.png))!
+            .buffer
+            .asUint8List();
+        binding.reportData ??= <String, dynamic>{};
+        (binding.reportData!['screenshots'] ??= <dynamic>[]).add({
+          'screenshotName': name,
+          'bytes': bytes.toList(),
+        });
+        image.dispose();
       });
-      image.dispose();
+      // ignore: avoid_print
+      print('Captured $name');
     }
 
     final records = <Map<String, dynamic>>[];
@@ -176,10 +181,27 @@ void main() {
       () => find.byKey(const Key('auth-error')).evaluate().isNotEmpty,
     );
     await shot('T01-invalid-sign-in');
-    await tester.enterText(
-      find.byKey(const Key('password')),
-      const String.fromEnvironment('TEST_A_PASSWORD'),
+    FocusManager.instance.primaryFocus?.unfocus();
+    await tester.pumpAndSettle();
+    // Replace text through the controller after Android IME dismissal settles.
+    tester
+        .widget<TextField>(find.byKey(const Key('password')))
+        .controller!
+        .text = const String.fromEnvironment(
+      'TEST_A_PASSWORD',
     );
+    await tester.pump();
+    expect(
+      tester
+              .widget<TextField>(find.byKey(const Key('password')))
+              .controller!
+              .text ==
+          const String.fromEnvironment('TEST_A_PASSWORD'),
+      true,
+      reason: 'The test must enter the configured password without logging it.',
+    );
+    // ignore: avoid_print
+    print('Configured sign-in input verified without exposing credentials');
     await tap('sign-in');
     await until(() => current != null);
     expect(

@@ -1,0 +1,134 @@
+[
+  {
+    "id": "T01",
+    "timestamp": "2026-11-18T06:27:31.590111Z",
+    "precondition": "Signed out; two dedicated cloud test accounts exist",
+    "action": "Invalid password, then valid user A sign-in",
+    "expected": "Visible error, then intended authenticated UID",
+    "actual": "Invalid credential error shown; authorized user A authenticated",
+    "result": "PASS",
+    "evidence": "T01-invalid-sign-in.png",
+    "roundSuffix": null
+  },
+  {
+    "id": "T02",
+    "timestamp": "2026-11-18T06:27:33.416704Z",
+    "precondition": "User A online",
+    "action": "GET exact Class B endpoint",
+    "expected": "Five validated medium category-17 boolean questions",
+    "actual": "Five live questions accepted; percent-encoded strings decoded",
+    "result": "PASS",
+    "evidence": "T02-live-question.png",
+    "roundSuffix": "elmRDP"
+  },
+  {
+    "id": "T03",
+    "timestamp": "2026-11-18T06:28:24.609963Z",
+    "precondition": "Development-only invalid response fixtures",
+    "action": "Inject malformed percent encoding, nonzero code and four results; retry immediately",
+    "expected": "Play blocked for every case; retry rate-limited",
+    "actual": "All three fixtures rejected; immediate retry says Wait; no invalid round became playable",
+    "result": "PASS",
+    "evidence": "T03-invalid-data-rate-limited.png; quiz unit tests",
+    "roundSuffix": "Cqrk2W"
+  },
+  {
+    "id": "T04",
+    "timestamp": "2026-11-18T06:27:34.987165Z",
+    "precondition": "Five live questions loaded",
+    "action": "Choose two correct and three incorrect answers; attempt repeated selection",
+    "expected": "2/5, locked choices, text plus color feedback",
+    "actual": "Final score 2/5; repeated answer calls did not change score",
+    "result": "PASS",
+    "evidence": "T04-correct.png; T04-incorrect.png",
+    "roundSuffix": "elmRDP"
+  },
+  {
+    "id": "T05",
+    "timestamp": "2026-11-18T06:27:39.636546Z",
+    "precondition": "First round reviewed and cloud verified",
+    "action": "Review all five entries and Replay",
+    "expected": "Five review entries; new ID and clean state",
+    "actual": "All review entries found; new ID; score 0 and no inherited answers",
+    "result": "PASS",
+    "evidence": "T06-cloud-verified.png; round trace",
+    "roundSuffix": "srvTFf"
+  },
+  {
+    "id": "T06",
+    "timestamp": "2026-11-18T06:27:37.652254Z",
+    "precondition": "Completed 2/5 round; user A online",
+    "action": "Submit and immediately repeat submission",
+    "expected": "One immutable attempt, server timestamp, exact server read",
+    "actual": "One additional cloud document; correctCount 2; resolved timestamp; server metadata checked",
+    "result": "PASS",
+    "evidence": "T06-cloud-verified.png",
+    "roundSuffix": "elmRDP"
+  },
+  {
+    "id": "T07",
+    "timestamp": "2026-11-18T06:30:38.506653Z",
+    "precondition": "App process stopped after the initial cloud test; network online; original ID retained only by external test harness",
+    "action": "Launch a fresh app process, restore user A authentication, retrieve the exact original ID without playing",
+    "expected": "Same original server record, score 2 and original timestamp; no replay or new save",
+    "actual": "Server-only retrieval returned original score 2 and exactly matching timestamp after process restart; no questions loaded",
+    "result": "PASS",
+    "roundSuffix": "elmRDP",
+    "evidence": "T07-restart-server-retrieval.png"
+  },
+  {
+    "id": "T08",
+    "timestamp": "2026-11-18T06:27:40.863005Z",
+    "precondition": "Completed unsaved round",
+    "action": "Disable actual Firestore networking, submit, reconnect and reconcile original ID",
+    "expected": "No false success or new ID; bounded recovery",
+    "actual": "Offline did not report verified; reconnect/reconcile recovered the same ID",
+    "result": "PASS",
+    "evidence": "T08-offline.png; T08-recovered.png",
+    "roundSuffix": "srvTFf"
+  },
+  {
+    "id": "T09",
+    "timestamp": "2026-11-18T06:27:46.906735Z",
+    "precondition": "Completed round; labeled first-read fault enabled",
+    "action": "Real transaction, inject first verification denial, retry only server read",
+    "expected": "Acknowledged write preserved; same server record verified; no duplicate",
+    "actual": "Real committed document exists; retry kept ID, count and original timestamp unchanged",
+    "result": "PASS",
+    "evidence": "T09-write-acknowledged-read-denied.png; T09-same-record-verified.png",
+    "roundSuffix": "G3qo0v"
+  },
+  {
+    "id": "T10",
+    "timestamp": "2026-11-18T06:27:48.416716Z",
+    "precondition": "Separate Firebase client authenticated as B",
+    "action": "Read and create under user A attempt path",
+    "expected": "Both rejected by deployed owner rules",
+    "actual": "Cross-user server read and write returned permission-denied",
+    "result": "PASS",
+    "evidence": "cloud test trace; deployed firestore.rules",
+    "roundSuffix": "G3qo0v"
+  },
+  {
+    "id": "T11",
+    "timestamp": "2026-11-18T06:27:49.001470Z",
+    "precondition": "Valid original cloud attempt exists",
+    "action": "Attempt score 6, extra field and update",
+    "expected": "All denied; original unchanged",
+    "actual": "Three permission-denied results; original score 2 and timestamp unchanged",
+    "result": "PASS",
+    "evidence": "cloud test trace; deployed firestore.rules",
+    "roundSuffix": "G3qo0v"
+  },
+  {
+    "id": "T12",
+    "timestamp": "2026-11-18T06:27:52.891754Z",
+    "precondition": "Completed round; labeled error hooks enabled",
+    "action": "Inject unavailable, then resource-exhausted; reconcile between bounded attempts",
+    "expected": "Distinct errors, no false success, same ID",
+    "actual": "Both errors visible; server absence checked before retry; real final write/read succeeded",
+    "result": "PASS",
+    "evidence": "T12-unavailable-injection.png; T12-quota-injection.png",
+    "roundSuffix": "hXS7Gd"
+  }
+]

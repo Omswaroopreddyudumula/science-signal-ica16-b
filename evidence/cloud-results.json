@@ -1,0 +1,1055 @@
+{
+  "stage": "cloud",
+  "records": [
+    {
+      "id": "T01",
+      "timestamp": "2026-11-18T06:27:31.590111Z",
+      "precondition": "Signed out; two dedicated cloud test accounts exist",
+      "action": "Invalid password, then valid user A sign-in",
+      "expected": "Visible error, then intended authenticated UID",
+      "actual": "Invalid credential error shown; authorized user A authenticated",
+      "result": "PASS",
+      "evidence": "T01-invalid-sign-in.png",
+      "roundSuffix": null
+    },
+    {
+      "id": "T02",
+      "timestamp": "2026-11-18T06:27:33.416704Z",
+      "precondition": "User A online",
+      "action": "GET exact Class B endpoint",
+      "expected": "Five validated medium category-17 boolean questions",
+      "actual": "Five live questions accepted; percent-encoded strings decoded",
+      "result": "PASS",
+      "evidence": "T02-live-question.png",
+      "roundSuffix": "elmRDP"
+    },
+    {
+      "id": "T04",
+      "timestamp": "2026-11-18T06:27:34.987165Z",
+      "precondition": "Five live questions loaded",
+      "action": "Choose two correct and three incorrect answers; attempt repeated selection",
+      "expected": "2/5, locked choices, text plus color feedback",
+      "actual": "Final score 2/5; repeated answer calls did not change score",
+      "result": "PASS",
+      "evidence": "T04-correct.png; T04-incorrect.png",
+      "roundSuffix": "elmRDP"
+    },
+    {
+      "id": "T06",
+      "timestamp": "2026-11-18T06:27:37.652254Z",
+      "precondition": "Completed 2/5 round; user A online",
+      "action": "Submit and immediately repeat submission",
+      "expected": "One immutable attempt, server timestamp, exact server read",
+      "actual": "One additional cloud document; correctCount 2; resolved timestamp; server metadata checked",
+      "result": "PASS",
+      "evidence": "T06-cloud-verified.png",
+      "roundSuffix": "elmRDP"
+    },
+    {
+      "id": "T05",
+      "timestamp": "2026-11-18T06:27:39.636546Z",
+      "precondition": "First round reviewed and cloud verified",
+      "action": "Review all five entries and Replay",
+      "expected": "Five review entries; new ID and clean state",
+      "actual": "All review entries found; new ID; score 0 and no inherited answers",
+      "result": "PASS",
+      "evidence": "T06-cloud-verified.png; round trace",
+      "roundSuffix": "srvTFf"
+    },
+    {
+      "id": "T08",
+      "timestamp": "2026-11-18T06:27:40.863005Z",
+      "precondition": "Completed unsaved round",
+      "action": "Disable actual Firestore networking, submit, reconnect and reconcile original ID",
+      "expected": "No false success or new ID; bounded recovery",
+      "actual": "Offline did not report verified; reconnect/reconcile recovered the same ID",
+      "result": "PASS",
+      "evidence": "T08-offline.png; T08-recovered.png",
+      "roundSuffix": "srvTFf"
+    },
+    {
+      "id": "T09",
+      "timestamp": "2026-11-18T06:27:46.906735Z",
+      "precondition": "Completed round; labeled first-read fault enabled",
+      "action": "Real transaction, inject first verification denial, retry only server read",
+      "expected": "Acknowledged write preserved; same server record verified; no duplicate",
+      "actual": "Real committed document exists; retry kept ID, count and original timestamp unchanged",
+      "result": "PASS",
+      "evidence": "T09-write-acknowledged-read-denied.png; T09-same-record-verified.png",
+      "roundSuffix": "G3qo0v"
+    },
+    {
+      "id": "T10",
+      "timestamp": "2026-11-18T06:27:48.416716Z",
+      "precondition": "Separate Firebase client authenticated as B",
+      "action": "Read and create under user A attempt path",
+      "expected": "Both rejected by deployed owner rules",
+      "actual": "Cross-user server read and write returned permission-denied",
+      "result": "PASS",
+      "evidence": "cloud test trace; deployed firestore.rules",
+      "roundSuffix": "G3qo0v"
+    },
+    {
+      "id": "T11",
+      "timestamp": "2026-11-18T06:27:49.001470Z",
+      "precondition": "Valid original cloud attempt exists",
+      "action": "Attempt score 6, extra field and update",
+      "expected": "All denied; original unchanged",
+      "actual": "Three permission-denied results; original score 2 and timestamp unchanged",
+      "result": "PASS",
+      "evidence": "cloud test trace; deployed firestore.rules",
+      "roundSuffix": "G3qo0v"
+    },
+    {
+      "id": "T12",
+      "timestamp": "2026-11-18T06:27:52.891754Z",
+      "precondition": "Completed round; labeled error hooks enabled",
+      "action": "Inject unavailable, then resource-exhausted; reconcile between bounded attempts",
+      "expected": "Distinct errors, no false success, same ID",
+      "actual": "Both errors visible; server absence checked before retry; real final write/read succeeded",
+      "result": "PASS",
+      "evidence": "T12-unavailable-injection.png; T12-quota-injection.png",
+      "roundSuffix": "hXS7Gd"
+    },
+    {
+      "id": "T03",
+      "timestamp": "2026-11-18T06:28:24.609963Z",
+      "precondition": "Development-only invalid response fixtures",
+      "action": "Inject malformed percent encoding, nonzero code and four results; retry immediately",
+      "expected": "Play blocked for every case; retry rate-limited",
+      "actual": "All three fixtures rejected; immediate retry says Wait; no invalid round became playable",
+      "result": "PASS",
+      "evidence": "T03-invalid-data-rate-limited.png; quiz unit tests",
+      "roundSuffix": "Cqrk2W"
+    }
+  ],
+  "trace": [
+    {
+      "time": "2026-11-18T06:27:31.626840Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:32.926486Z",
+      "event": "GET validated",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:33.462852Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:33.916318Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:33.993854Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:34.063189Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:34.140102Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:34.592354Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:34.661059Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:34.743159Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:34.812625Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:34.878874Z",
+      "event": "continue",
+      "phase": "readyToSubmit",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:36.642763Z",
+      "event": "transaction started",
+      "phase": "submitting",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:36.934662Z",
+      "event": "commit acknowledged",
+      "phase": "verifying",
+      "roundSuffix": "elmRDP",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:37.023530Z",
+      "event": "server verified",
+      "phase": "cloudVerified",
+      "roundSuffix": "elmRDP",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:37.023655Z",
+      "event": "operation settled",
+      "phase": "cloudVerified",
+      "roundSuffix": "elmRDP",
+      "acknowledged": true,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:38.711413Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.489258Z",
+      "event": "GET validated",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.636888Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.637361Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.637384Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.637391Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.637397Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.637402Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.637407Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.637412Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.637418Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.637423Z",
+      "event": "continue",
+      "phase": "readyToSubmit",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:39.677152Z",
+      "event": "transaction started",
+      "phase": "submitting",
+      "roundSuffix": "srvTFf",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:39.877677Z",
+      "event": "commit acknowledged",
+      "phase": "verifying",
+      "roundSuffix": "srvTFf",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:39.879819Z",
+      "event": "cloud error",
+      "phase": "verificationUnavailable",
+      "roundSuffix": "srvTFf",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:39.879842Z",
+      "event": "operation settled",
+      "phase": "verificationUnavailable",
+      "roundSuffix": "srvTFf",
+      "acknowledged": true,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:40.345387Z",
+      "event": "reconcile started",
+      "phase": "verifying",
+      "roundSuffix": "srvTFf",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:40.482277Z",
+      "event": "reconcile verified",
+      "phase": "cloudVerified",
+      "roundSuffix": "srvTFf",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:40.482336Z",
+      "event": "reconcile settled",
+      "phase": "cloudVerified",
+      "roundSuffix": "srvTFf",
+      "acknowledged": true,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:44.866309Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623597Z",
+      "event": "GET validated",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623723Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623737Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623749Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623758Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623768Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623778Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623787Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623796Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623806Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.623816Z",
+      "event": "continue",
+      "phase": "readyToSubmit",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:45.655991Z",
+      "event": "transaction started",
+      "phase": "submitting",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:45.804968Z",
+      "event": "commit acknowledged",
+      "phase": "verifying",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:45.805388Z",
+      "event": "cloud error",
+      "phase": "permissionDenied",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:45.805422Z",
+      "event": "operation settled",
+      "phase": "permissionDenied",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": true,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:46.367307Z",
+      "event": "reconcile started",
+      "phase": "verifying",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:46.446673Z",
+      "event": "reconcile verified",
+      "phase": "cloudVerified",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:46.446732Z",
+      "event": "reconcile settled",
+      "phase": "cloudVerified",
+      "roundSuffix": "G3qo0v",
+      "acknowledged": true,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.072352Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767311Z",
+      "event": "GET validated",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767543Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767557Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767562Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767567Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767571Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767575Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767579Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767583Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767588Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.767593Z",
+      "event": "continue",
+      "phase": "readyToSubmit",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:51.786221Z",
+      "event": "transaction started",
+      "phase": "submitting",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:51.786720Z",
+      "event": "cloud error",
+      "phase": "saveUnknown",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:51.786765Z",
+      "event": "operation settled",
+      "phase": "saveUnknown",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:52.209698Z",
+      "event": "reconcile started",
+      "phase": "verifying",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:52.260510Z",
+      "event": "server absence confirmed",
+      "phase": "readyToSubmit",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:52.260588Z",
+      "event": "reconcile settled",
+      "phase": "readyToSubmit",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:52.260649Z",
+      "event": "transaction started",
+      "phase": "submitting",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:52.260758Z",
+      "event": "cloud error",
+      "phase": "saveUnknown",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:52.260786Z",
+      "event": "operation settled",
+      "phase": "saveUnknown",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:52.656675Z",
+      "event": "reconcile started",
+      "phase": "verifying",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:52.707455Z",
+      "event": "server absence confirmed",
+      "phase": "readyToSubmit",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:52.707511Z",
+      "event": "reconcile settled",
+      "phase": "readyToSubmit",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:52.707571Z",
+      "event": "transaction started",
+      "phase": "submitting",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:52.842398Z",
+      "event": "commit acknowledged",
+      "phase": "verifying",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:52.891600Z",
+      "event": "server verified",
+      "phase": "cloudVerified",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:27:52.891701Z",
+      "event": "operation settled",
+      "phase": "cloudVerified",
+      "roundSuffix": "hXS7Gd",
+      "acknowledged": true,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:57.893328Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853455Z",
+      "event": "GET validated",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853812Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853857Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853871Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853882Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853898Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853908Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853919Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853931Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853944Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.853955Z",
+      "event": "continue",
+      "phase": "readyToSubmit",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:27:58.891022Z",
+      "event": "transaction started",
+      "phase": "submitting",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:28:08.892517Z",
+      "event": "10 second UI timeout",
+      "phase": "saveUnknown",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:28:11.049765Z",
+      "event": "commit acknowledged",
+      "phase": "verifying",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:28:11.131532Z",
+      "event": "server verified",
+      "phase": "cloudVerified",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:28:11.131670Z",
+      "event": "operation settled",
+      "phase": "cloudVerified",
+      "roundSuffix": "4fPz1A",
+      "acknowledged": true,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:12.133635Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "xsvVld",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:12.134544Z",
+      "event": "GET rejected",
+      "phase": "requestError",
+      "roundSuffix": "xsvVld",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:12.134646Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "xsvVld",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:12.134708Z",
+      "event": "GET rejected",
+      "phase": "requestError",
+      "roundSuffix": "xsvVld",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:18.158576Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "4CBSIb",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:18.159077Z",
+      "event": "GET rejected",
+      "phase": "requestError",
+      "roundSuffix": "4CBSIb",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:18.159132Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "4CBSIb",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:18.159164Z",
+      "event": "GET rejected",
+      "phase": "requestError",
+      "roundSuffix": "4CBSIb",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:24.186382Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "Cqrk2W",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:24.187402Z",
+      "event": "GET rejected",
+      "phase": "requestError",
+      "roundSuffix": "Cqrk2W",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:24.187512Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "Cqrk2W",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:24.187571Z",
+      "event": "GET rejected",
+      "phase": "requestError",
+      "roundSuffix": "Cqrk2W",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:28:24.610571Z",
+      "event": "reconcile started",
+      "phase": "verifying",
+      "roundSuffix": "elmRDP",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:28:24.688623Z",
+      "event": "reconcile verified",
+      "phase": "cloudVerified",
+      "roundSuffix": "elmRDP",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:28:24.688681Z",
+      "event": "reconcile settled",
+      "phase": "cloudVerified",
+      "roundSuffix": "elmRDP",
+      "acknowledged": true,
+      "inFlight": false
+    }
+  ],
+  "encodedPair": {
+    "encoded": "%22Tachycardia%22%20or%20%22Tachyarrhythmia%22%20refers%20to%20a%20resting%20heart-rate%20near%20or%20over%20100%20BPM.",
+    "decoded": "\"Tachycardia\" or \"Tachyarrhythmia\" refers to a resting heart-rate near or over 100 BPM."
+  },
+  "firstRoundSuffix": "elmRDP",
+  "t09RoundSuffix": "G3qo0v",
+  "serverRecord": {
+    "questionCount": 5,
+    "schemaVersion": 1,
+    "correctCount": 2,
+    "variant": "B",
+    "submittedAt": "2026-11-18T06:27:36.843Z",
+    "categoryId": 17
+  },
+  "collisionCheck": "Changed-score same-ID commit rejected; original unchanged"
+}

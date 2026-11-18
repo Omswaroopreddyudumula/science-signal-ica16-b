@@ -1,0 +1,10 @@
+{
+  "artifact": "ICA16_B_OmSwaroopReddyUdumula.apk",
+  "bytes": 52808409,
+  "sha256": "7786d9a76e632807750070ddb4e4e35d9446a324001f165b09dcbbe4e7f4188a",
+  "mode": "release",
+  "platform": "Pixel 8 Android 17 emulator",
+  "install": "PASS",
+  "startup": "PASS: signed-out form displayed",
+  "tests": "12 deployed-cloud test records; integration tests use debug instrumentation; final release separately installed and launched"
+}
