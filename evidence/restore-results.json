@@ -10,7 +10,8 @@
       "actual": "Server-only retrieval returned original score 2 and exactly matching timestamp after process restart; no questions loaded",
       "result": "PASS",
       "roundSuffix": "elmRDP",
-      "evidence": "T07-restart-server-retrieval.png"
+      "evidence": "T07-restart-server-retrieval.png",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     }
   ],
   "serverRecord": {
@@ -46,5 +47,6 @@
       "acknowledged": true,
       "inFlight": false
     }
-  ]
+  ],
+  "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
 }

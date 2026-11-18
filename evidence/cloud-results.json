@@ -10,7 +10,8 @@
       "actual": "Invalid credential error shown; authorized user A authenticated",
       "result": "PASS",
       "evidence": "T01-invalid-sign-in.png",
-      "roundSuffix": null
+      "roundSuffix": null,
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T02",
@@ -21,7 +22,8 @@
       "actual": "Five live questions accepted; percent-encoded strings decoded",
       "result": "PASS",
       "evidence": "T02-live-question.png",
-      "roundSuffix": "elmRDP"
+      "roundSuffix": "elmRDP",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T04",
@@ -32,7 +34,8 @@
       "actual": "Final score 2/5; repeated answer calls did not change score",
       "result": "PASS",
       "evidence": "T04-correct.png; T04-incorrect.png",
-      "roundSuffix": "elmRDP"
+      "roundSuffix": "elmRDP",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T06",
@@ -43,7 +46,8 @@
       "actual": "One additional cloud document; correctCount 2; resolved timestamp; server metadata checked",
       "result": "PASS",
       "evidence": "T06-cloud-verified.png",
-      "roundSuffix": "elmRDP"
+      "roundSuffix": "elmRDP",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T05",
@@ -54,7 +58,8 @@
       "actual": "All review entries found; new ID; score 0 and no inherited answers",
       "result": "PASS",
       "evidence": "T06-cloud-verified.png; round trace",
-      "roundSuffix": "srvTFf"
+      "roundSuffix": "srvTFf",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T08",
@@ -65,7 +70,8 @@
       "actual": "Offline did not report verified; reconnect/reconcile recovered the same ID",
       "result": "PASS",
       "evidence": "T08-offline.png; T08-recovered.png",
-      "roundSuffix": "srvTFf"
+      "roundSuffix": "srvTFf",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T09",
@@ -76,7 +82,8 @@
       "actual": "Real committed document exists; retry kept ID, count and original timestamp unchanged",
       "result": "PASS",
       "evidence": "T09-write-acknowledged-read-denied.png; T09-same-record-verified.png",
-      "roundSuffix": "G3qo0v"
+      "roundSuffix": "G3qo0v",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T10",
@@ -87,7 +94,8 @@
       "actual": "Cross-user server read and write returned permission-denied",
       "result": "PASS",
       "evidence": "cloud test trace; deployed firestore.rules",
-      "roundSuffix": "G3qo0v"
+      "roundSuffix": "G3qo0v",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T11",
@@ -98,7 +106,8 @@
       "actual": "Three permission-denied results; original score 2 and timestamp unchanged",
       "result": "PASS",
       "evidence": "cloud test trace; deployed firestore.rules",
-      "roundSuffix": "G3qo0v"
+      "roundSuffix": "G3qo0v",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T12",
@@ -109,7 +118,8 @@
       "actual": "Both errors visible; server absence checked before retry; real final write/read succeeded",
       "result": "PASS",
       "evidence": "T12-unavailable-injection.png; T12-quota-injection.png",
-      "roundSuffix": "hXS7Gd"
+      "roundSuffix": "hXS7Gd",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
       "id": "T03",
@@ -120,7 +130,8 @@
       "actual": "All three fixtures rejected; immediate retry says Wait; no invalid round became playable",
       "result": "PASS",
       "evidence": "T03-invalid-data-rate-limited.png; quiz unit tests",
-      "roundSuffix": "Cqrk2W"
+      "roundSuffix": "Cqrk2W",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     }
   ],
   "trace": [
@@ -1051,5 +1062,6 @@
     "submittedAt": "2026-11-18T06:27:36.843Z",
     "categoryId": 17
   },
-  "collisionCheck": "Changed-score same-ID commit rejected; original unchanged"
+  "collisionCheck": "Changed-score same-ID commit rejected; original unchanged",
+  "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
 }
