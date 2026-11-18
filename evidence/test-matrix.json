@@ -85,14 +85,14 @@
   },
   {
     "id": "T08",
-    "timestamp": "2026-11-18T06:27:40.863005Z",
-    "precondition": "Completed unsaved round",
-    "action": "Disable actual Firestore networking, submit, reconnect and reconcile original ID",
-    "expected": "No false success or new ID; bounded recovery",
-    "actual": "Offline did not report verified; reconnect/reconcile recovered the same ID",
+    "timestamp": "2026-11-18T06:48:45.099500Z",
+    "precondition": "Completed unsaved live quiz; actual Wi-Fi and mobile data disabled by external device test controller; no active default network",
+    "action": "Submit with device disconnected; restore both network connections; reconcile and retry the original ID",
+    "expected": "No acknowledgement or cloud verification while offline; one recovered original-ID record after reconnect",
+    "actual": "Offline attempt remained unacknowledged and unresolved; reconnect plus original-ID reconciliation and retry produced a real server-verified document",
     "result": "PASS",
-    "evidence": "T08-offline.png; T08-recovered.png",
-    "roundSuffix": "srvTFf",
+    "roundSuffix": "PkVE2y",
+    "evidence": "T08-offline.png; T08-recovered.png; T08-device-network-control.json",
     "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
   },
   {

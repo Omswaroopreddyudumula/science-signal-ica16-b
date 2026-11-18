@@ -72,6 +72,8 @@ flutter build apk --release --dart-define-from-file=/private/path/build-defines.
 
 The private test-defines file also supplies TEST_A_EMAIL, TEST_A_PASSWORD, TEST_A_UID, TEST_B_EMAIL, TEST_B_PASSWORD and TEST_B_UID. These are test-run inputs, not application constants or committed credentials. The driver keeps the exact retrieval ID in a private run file and writes only redacted public records. Captures are raster images of the actual Flutter interface running on the Android emulator.
 
+T08 is additionally verified with actual device connectivity disabled by tools/network_test.py, not merely the Firestore SDK network toggle. Start that controller in a separate terminal, then run integration_test/offline_test.dart using the same driver and private test-defines. It restores Wi-Fi and mobile data in a finally block and imposes an offline safety limit. The corrected record is in physical-offline-results.json.
+
 T01–T12 records, state traces, actual encoded/decoded pair, deployed-rule evidence, and server records are in `evidence/`. The evidence document contains all six 120–180 word responses and the instructor-candidate critique. Graduate extensions are not claimed.
 
 ## Build and delivery

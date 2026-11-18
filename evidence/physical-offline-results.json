@@ -1,0 +1,196 @@
+{
+  "stage": "physical-offline",
+  "records": [
+    {
+      "id": "T08",
+      "timestamp": "2026-11-18T06:48:45.099500Z",
+      "precondition": "Completed unsaved live quiz; actual Wi-Fi and mobile data disabled by external device test controller; no active default network",
+      "action": "Submit with device disconnected; restore both network connections; reconcile and retry the original ID",
+      "expected": "No acknowledgement or cloud verification while offline; one recovered original-ID record after reconnect",
+      "actual": "Offline attempt remained unacknowledged and unresolved; reconnect plus original-ID reconciliation and retry produced a real server-verified document",
+      "result": "PASS",
+      "roundSuffix": "PkVE2y",
+      "evidence": "T08-offline.png; T08-recovered.png; T08-device-network-control.json",
+      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
+    }
+  ],
+  "trace": [
+    {
+      "time": "2026-11-18T06:48:38.266582Z",
+      "event": "GET started",
+      "phase": "loading",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.499628Z",
+      "event": "GET validated",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501085Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501148Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501162Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501171Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501181Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501191Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501253Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501263Z",
+      "event": "continue",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501273Z",
+      "event": "answer locked",
+      "phase": "playing",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:39.501285Z",
+      "event": "continue",
+      "phase": "readyToSubmit",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:41.104223Z",
+      "event": "transaction started",
+      "phase": "submitting",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:48:41.218319Z",
+      "event": "cloud error",
+      "phase": "saveUnknown",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:48:41.218754Z",
+      "event": "operation settled",
+      "phase": "saveUnknown",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:44.187343Z",
+      "event": "reconcile started",
+      "phase": "verifying",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:48:44.341067Z",
+      "event": "server absence confirmed",
+      "phase": "readyToSubmit",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:48:44.341131Z",
+      "event": "reconcile settled",
+      "phase": "readyToSubmit",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": false
+    },
+    {
+      "time": "2026-11-18T06:48:44.341178Z",
+      "event": "transaction started",
+      "phase": "submitting",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": false,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:48:44.598129Z",
+      "event": "commit acknowledged",
+      "phase": "verifying",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:48:44.674675Z",
+      "event": "server verified",
+      "phase": "cloudVerified",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": true,
+      "inFlight": true
+    },
+    {
+      "time": "2026-11-18T06:48:44.674912Z",
+      "event": "operation settled",
+      "phase": "cloudVerified",
+      "roundSuffix": "PkVE2y",
+      "acknowledged": true,
+      "inFlight": false
+    }
+  ],
+  "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
+}

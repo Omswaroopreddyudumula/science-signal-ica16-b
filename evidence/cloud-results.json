@@ -62,18 +62,6 @@
       "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
     },
     {
-      "id": "T08",
-      "timestamp": "2026-11-18T06:27:40.863005Z",
-      "precondition": "Completed unsaved round",
-      "action": "Disable actual Firestore networking, submit, reconnect and reconcile original ID",
-      "expected": "No false success or new ID; bounded recovery",
-      "actual": "Offline did not report verified; reconnect/reconcile recovered the same ID",
-      "result": "PASS",
-      "evidence": "T08-offline.png; T08-recovered.png",
-      "roundSuffix": "srvTFf",
-      "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
-    },
-    {
       "id": "T09",
       "timestamp": "2026-11-18T06:27:46.906735Z",
       "precondition": "Completed round; labeled first-read fault enabled",
@@ -1063,5 +1051,9 @@
     "categoryId": 17
   },
   "collisionCheck": "Changed-score same-ID commit rejected; original unchanged",
-  "appCommit": "6551cd272e2044a9395fff2775faa799053601ea"
+  "appCommit": "6551cd272e2044a9395fff2775faa799053601ea",
+  "supplementalSdkNetworkTrial": {
+    "note": "The original SDK disableNetwork trial did not disable all transaction connectivity. It is not counted as T08. The corrected actual-device T08 is physical-offline-results.json.",
+    "observation": "Offline did not report verified; reconnect/reconcile recovered the same ID"
+  }
 }
