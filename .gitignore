@@ -22,3 +22,5 @@ android/key.properties
 *defines.json
 google-services.json
 node_modules/
+
+*.iml

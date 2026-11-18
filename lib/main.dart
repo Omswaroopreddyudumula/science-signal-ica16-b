@@ -27,32 +27,37 @@ Future<void> main() async {
 }
 
 class ScienceApp extends StatelessWidget {
-  const ScienceApp({super.key, this.onController});
+  const ScienceApp({super.key, this.onController, this.controllerFactory});
   final void Function(RoundController)? onController;
+  final RoundController Function(String)? controllerFactory;
   @override
-  Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'Science Signal',
-    theme: ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff146b75)),
-      useMaterial3: true,
-    ),
-    home: StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, s) {
-        if (s.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-        return s.data == null
-            ? const SignIn()
-            : QuizScreen(
-                key: ValueKey(s.data!.uid),
-                user: s.data!,
-                onController: onController,
-              );
-      },
+  Widget build(BuildContext context) => RepaintBoundary(
+    key: const Key('capture-root'),
+    child: MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Science Signal',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff146b75)),
+        useMaterial3: true,
+      ),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, s) {
+          if (s.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return s.data == null
+              ? const SignIn()
+              : QuizScreen(
+                  key: ValueKey(s.data!.uid),
+                  user: s.data!,
+                  onController: onController,
+                  controllerFactory: controllerFactory,
+                );
+        },
+      ),
     ),
   );
 }
@@ -163,9 +168,15 @@ class _SignInState extends State<SignIn> {
 }
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key, required this.user, this.onController});
+  const QuizScreen({
+    super.key,
+    required this.user,
+    this.onController,
+    this.controllerFactory,
+  });
   final User user;
   final void Function(RoundController)? onController;
+  final RoundController Function(String)? controllerFactory;
   @override
   State<QuizScreen> createState() => _QuizScreenState();
 }
@@ -177,7 +188,9 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    c = RoundController(widget.user.uid);
+    c =
+        widget.controllerFactory?.call(widget.user.uid) ??
+        RoundController(widget.user.uid);
     widget.onController?.call(c);
     c.addListener(refresh);
   }
@@ -242,7 +255,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 const SizedBox(height: 8),
                 if (c.roundId != null)
                   SelectableText(
-                    'Round ID: ${c.roundId}',
+                    'Round ID suffix: …${c.roundId!.substring(c.roundId!.length - 6)}',
                     key: const Key('round-id'),
                   ),
                 const SizedBox(height: 12),
@@ -453,7 +466,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     contentPadding: EdgeInsets.zero,
                     title: const Text('Development: disable Firestore network'),
                     value: offline,
-                    onChanged: c.inFlight ? null : network,
+                    onChanged: c.inFlight && !offline ? null : network,
                   ),
                   const Text(
                     'deniedVerification injects only the first read after a real commit. unavailable and quota inject before commit. delayedAcknowledgement delays observation of a real commit.',

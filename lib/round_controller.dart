@@ -156,7 +156,31 @@ class RoundController extends ChangeNotifier {
     message = afterCommit
         ? 'Write acknowledged; verification unavailable. ${describe(e)} Retry only the server read of this ID.'
         : 'Save outcome unresolved. ${describe(e)} Reconcile this ID from the server before another save.';
+    if (e is FirebaseException &&
+        (e.message?.toLowerCase().contains('injection') ?? false)) {
+      message += ' [DEVELOPMENT INJECTION]';
+    }
     emit('cloud error');
+  }
+
+  // A UI timeout never cancels native work or unlocks a second operation.
+  Future<T> observeRead<T>(Future<T> operation, int g, String? id) async {
+    final timer = Timer(const Duration(seconds: 10), () {
+      if (active(g, id) && inFlight) {
+        phase = acknowledged
+            ? Phase.verificationUnavailable
+            : Phase.saveUnknown;
+        message = acknowledged
+            ? 'Write acknowledged; verification unavailable. Server read is still running; no overlapping retry is allowed.'
+            : 'Server read timed out. Keep the original ID while the pending operation settles.';
+        emit('server read UI timeout');
+      }
+    });
+    try {
+      return await operation;
+    } finally {
+      timer.cancel();
+    }
   }
 
   Future<void> submit() async {
@@ -191,9 +215,7 @@ class RoundController extends ChangeNotifier {
       phase = Phase.verifying;
       message = 'Write acknowledged. Retrieving the exact server document…';
       emit('commit acknowledged');
-      final record = await store
-          .read(id, expected: frozen)
-          .timeout(const Duration(seconds: 10));
+      final record = await observeRead(store.read(id, expected: frozen), g, id);
       if (!active(g, id)) return;
       if (record == null) {
         throw StateError(
@@ -225,9 +247,7 @@ class RoundController extends ChangeNotifier {
         : 'Reconciling the original ID from the server…';
     emit('reconcile started');
     try {
-      final record = await store
-          .read(id, expected: frozen)
-          .timeout(const Duration(seconds: 10));
+      final record = await observeRead(store.read(id, expected: frozen), g, id);
       if (!active(g, id)) return;
       if (record == null) {
         if (acknowledged) {
@@ -257,7 +277,10 @@ class RoundController extends ChangeNotifier {
   }
 
   Future<void> retrieve(String id) async {
-    if (unresolved || !identityMatches || id.trim().isEmpty || id.contains('/')) {
+    if (unresolved ||
+        !identityMatches ||
+        id.trim().isEmpty ||
+        id.contains('/')) {
       return;
     }
     generation++;
@@ -278,7 +301,7 @@ class RoundController extends ChangeNotifier {
     message = 'Finding the latest server attempt…';
     emit('latest server query');
     try {
-      final id = await store.latestId().timeout(const Duration(seconds: 10));
+      final id = await observeRead(store.latestId(), g, roundId);
       if (!identityMatches || generation != g) return;
       inFlight = false;
       if (id == null) {
