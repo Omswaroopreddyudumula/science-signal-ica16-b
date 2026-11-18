@@ -1,7 +1,26 @@
 00:00 +0: loading /Users/omswaroopudumula/Documents/Codex/2026-10-27/referenced-chatgpt-conversation-this-is-an/work/a16/app/test/quiz_test.dart
-00:00 +0 -1: loading /Users/omswaroopudumula/Documents/Codex/2026-10-27/referenced-chatgpt-conversation-this-is-an/work/a16/app/test/quiz_test.dart [E]
-  Failed to load "/Users/omswaroopudumula/Documents/Codex/2026-10-27/referenced-chatgpt-conversation-this-is-an/work/a16/app/test/quiz_test.dart": Does not exist.
+00:00 +0: strict endpoint decoding and invalid cases
+00:00 +0 -1: strict endpoint decoding and invalid cases [E]
+  Expected: throws <Instance of 'FormatException'>
+    Actual: <Closure: () => List<Question>>
+     Which: threw ArgumentError:<Invalid argument(s): Invalid URL encoding>
+            stack dart:core                                           Uri.decodeComponent
+                  package:science_signal_16/quiz.dart 13:18           new Question.parse.decode
+                  package:science_signal_16/quiz.dart 15:44           new Question.parse
+                  dart:_internal                                      ListIterable.toList
+                  package:science_signal_16/quiz.dart 28:56           parseQuestions
+                  test/quiz_test.dart 13:53                           main.<fn>.<fn>
+                  package:matcher                                     expect
+                  package:flutter_test/src/widget_tester.dart 473:18  expect
+                  test/quiz_test.dart 13:42                           main.<fn>
+                  
+            which is not an instance of 'FormatException'
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/quiz_test.dart 13:42                           main.<fn>
+  
 00:00 +0 -1: Some tests failed.
 
 Failing tests:
-  /Users/omswaroopudumula/Documents/Codex/2026-10-27/referenced-chatgpt-conversation-this-is-an/work/a16/app/test/quiz_test.dart: loading /Users/omswaroopudumula/Documents/Codex/2026-10-27/referenced-chatgpt-conversation-this-is-an/work/a16/app/test/quiz_test.dart
+  /Users/omswaroopudumula/Documents/Codex/2026-10-27/referenced-chatgpt-conversation-this-is-an/work/a16/app/test/quiz_test.dart: strict endpoint decoding and invalid cases

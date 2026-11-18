@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  match /users/{uid}/attempts/{roundId} {
+   function owner() { return request.auth != null && request.auth.uid == uid; }
+   allow read: if owner();
+   allow create: if owner()
+    && request.resource.data.keys().hasAll(['schemaVersion','variant','categoryId','questionCount','correctCount','submittedAt'])
+    && request.resource.data.keys().hasOnly(['schemaVersion','variant','categoryId','questionCount','correctCount','submittedAt'])
+    && request.resource.data.schemaVersion is int && request.resource.data.schemaVersion == 1
+    && request.resource.data.variant is string && request.resource.data.variant == 'B'
+    && request.resource.data.categoryId is int && request.resource.data.categoryId == 17
+    && request.resource.data.questionCount is int && request.resource.data.questionCount == 5
+    && request.resource.data.correctCount is int && request.resource.data.correctCount >= 0 && request.resource.data.correctCount <= 5
+    && request.resource.data.submittedAt is timestamp && request.resource.data.submittedAt == request.time;
+   allow update, delete: if false;
+  }
+  match /campus_products/{id} {
+   function lab() { return request.time < timestamp.date(2026, 11, 7); }
+   allow read, delete: if lab();
+   allow create, update: if lab()
+     && request.resource.data.keys().hasOnly(['name','price'])
+     && request.resource.data.name is string
+     && request.resource.data.name.size() > 0
+     && request.resource.data.price is number
+     && request.resource.data.price >= 0
+     && request.resource.data.price < 1000000;
+  }
+ }
+}
