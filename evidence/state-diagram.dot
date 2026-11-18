@@ -1,0 +1,29 @@
+digraph states {
+ graph [layout=neato, overlap=false, splines=true, bgcolor=white, pad=.15];
+ node [shape=box,style="rounded,filled",fillcolor="#e8f4f4",color="#146b75",fontname=Arial,fontsize=18,width=3.0,height=.8,fixedsize=true];
+ edge [fontname=Arial,fontsize=16,color="#475569",arrowsize=.8];
+ signedOut [label="signedOut\nSignIn.error = authError",pos="0,600!"];
+ idle [label="idle",pos="300,600!"];
+ loading [label="loading",pos="600,600!"];
+ requestError [label="requestError",pos="0,400!"];
+ playing [label="playing",pos="300,400!"];
+ ready [label="readyToSubmit",pos="600,400!"];
+ unknown [label="saveUnknown",fillcolor="#fff0c2",pos="0,200!"];
+ submitting [label="submitting",pos="300,200!"];
+ verifying [label="verifying",pos="600,200!"];
+ collision [label="collision",fillcolor="#ffe4e4",pos="0,0!"];
+ denied [label="permissionDenied /\nverificationUnavailable",fillcolor="#fff0c2",pos="300,0!"];
+ verified [label="cloudVerified",fillcolor="#d3efcf",pos="600,0!"];
+ signedOut->idle [label="1"];
+ idle->loading [label="2"];
+ loading->playing [label="3"];
+ loading->requestError [dir=both,label="4 / 5"];
+ playing->ready [label="6"];
+ ready->submitting [label="7"];
+ submitting->verifying [label="8"];
+ submitting->unknown [label="9"];
+ unknown->verifying [label="10"];
+ submitting->collision [label="11"];
+ verifying->denied [dir=both,label="12 / 13"];
+ verifying->verified [label="14"];
+}
