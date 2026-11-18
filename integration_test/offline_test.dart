@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -23,8 +22,9 @@ void main() {
     Future<void> until(bool Function() predicate, {int seconds = 35}) async {
       final end = DateTime.now().add(Duration(seconds: seconds));
       while (!predicate()) {
-        if (DateTime.now().isAfter(end))
+        if (DateTime.now().isAfter(end)) {
           fail('Offline test timeout: ${c?.phase.name}');
+        }
         await tester.pump(const Duration(milliseconds: 100));
         await tester.runAsync(
           () => Future<void>.delayed(const Duration(milliseconds: 100)),
@@ -81,8 +81,9 @@ void main() {
     await until(() => File('$dir/ica16-on-confirmed').existsSync());
     await operation;
     await tester.runAsync(() => c!.reconcile());
-    if (c!.phase == Phase.readyToSubmit)
+    if (c!.phase == Phase.readyToSubmit) {
       await tester.runAsync(() => c!.submit());
+    }
     expect(c!.phase, Phase.cloudVerified, reason: c!.message);
     expect(c!.roundId, id);
     await tester.pump();
